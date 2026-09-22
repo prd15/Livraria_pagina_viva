@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Etapa 4.1: orienta o navegador a usar a largura real do dispositivo e escala inicial 1. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Livro do Desassossego | Livraria Página Viva</title>
+    <!-- Etapa 2 e 7: CSS externo, caminho relativo a partir da pasta do projeto. -->
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+
+<body>
+
+    <header id="cabecalho">
+        <h1 class="marca">Livraria Página Viva</h1>
+
+        <nav id="menu-principal">
+            <ul class="lista-menu">
+                <li><a href="#topo">Início</a></li>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <!-- Link interno obrigatório: navega até a seção de contato sem recarregar a página. -->
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+
+        <p class="carrinho-resumo">
+            Carrinho: <span id="contador">0</span> item(ns)
+        </p>
+    </header>
+
+    <main id="topo">
+
+        <article id="catalogo" class="cartao">
+
+            <img class="capa" src="imagens/capa-livro.png"
+                 alt="Capa do Livro do Desassossego, de Fernando Pessoa: fundo vermelho com o nome do autor em letras garrafais brancas e vermelhas, e o título em destaque no centro.">
+
+            <div class="cartao-dados">
+                <p class="selo">Clássico · Domínio público</p>
+                <h2 id="titulo-livro">Livro do Desassossego</h2>
+                <p class="autor">Fernando Pessoa</p>
+                <p class="preco">R$ 49,90
+                    <span class="preco-parcelas">ou 3x de R$ 16,63 sem juros</span>
+                </p>
+
+                <p>O <em>Livro do Desassossego</em> é atribuído por Fernando Pessoa a Bernardo
+                    Soares, ajudante de guarda-livros em um escritório da Rua dos Douradores, em
+                    Lisboa. É dele a voz que conduz o livro inteiro.</p>
+
+                <p>Não há enredo nem capítulos no sentido comum. O texto se organiza em
+                    fragmentos: anotações, descrições da cidade, divagações sobre o tédio e
+                    sobre a própria consciência. Pessoa chamou o conjunto de "autobiografia
+                    sem factos".</p>
+
+                <p>Ele nunca terminou nem ordenou a obra. Os fragmentos ficaram entre os
+                    milhares de papéis guardados em sua arca e só foram publicados em 1982,
+                    quase cinquenta anos depois de sua morte. É por isso que cada edição
+                    apresenta o livro em uma ordem diferente.</p>
+
+                <button id="btn-adicionar" type="button">Adicionar ao carrinho</button>
+
+                <!-- Etapa 5.1: lista vazia que o JavaScript preenche a cada clique. -->
+                <ul id="carrinho"></ul>
+            </div>
+
+        </article>
+
+        <!-- Etapa 2: este elemento carrega AO MESMO TEMPO a classe .bloco-secao e o id
+             #destaques, cada um pedindo uma cor de fundo diferente no CSS. -->
+        <section id="destaques" class="bloco-secao">
+            <h2>Destaques deste título</h2>
+            <!-- <ul> porque a ordem dos itens não altera o sentido: são vantagens independentes. -->
+            <ul class="lista-destaques">
+                <li class="destaque">Capa dura com acabamento costurado</li>
+                <li class="destaque">Frete grátis para todo o Brasil</li>
+                <li class="destaque">Entrega em 24h na região metropolitana</li>
+                <li class="destaque">Posfácio inédito sobre a recepção da obra</li>
+            </ul>
+        </section>
+
+        <section id="formatos">
+            <h2>Formatos disponíveis</h2>
+            <!-- <table> porque existe relação tabular real: cada linha é um formato e cada
+                 coluna é um atributo comparável entre todos eles. -->
+            <table class="tabela-formatos">
+                <caption>Comparação de preço e prazo de entrega por formato</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Formato</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Prazo de entrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Físico (capa dura)</th>
+                        <td>R$ 49,90</td>
+                        <td>2 a 5 dias úteis</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">E-book (ePub e PDF)</th>
+                        <td>R$ 24,90</td>
+                        <td>Imediato, por e-mail</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Audiobook (12h40min)</th>
+                        <td>R$ 34,90</td>
+                        <td>Imediato, no aplicativo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Etapa 3.3: os mesmos formatos como cartões, organizados em grade com CSS Grid. -->
+            <div class="grade-formatos">
+                <article class="cartao-formato">
+                    <p class="selo-formato">Mais vendido</p>
+                    <h3>Físico</h3>
+                    <p class="preco">R$ 49,90</p>
+                    <p>Capa dura, 480 páginas, papel pólen.</p>
+                </article>
+                <article class="cartao-formato">
+                    <h3>E-book</h3>
+                    <p class="preco">R$ 24,90</p>
+                    <p>Leitura em qualquer dispositivo, sem DRM.</p>
+                </article>
+                <article class="cartao-formato">
+                    <h3>Audiobook</h3>
+                    <p class="preco">R$ 34,90</p>
+                    <p>Narração integral por ator profissional.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="contato">
+            <h2>Fale com a Página Viva</h2>
+            <p>Preencha o formulário e nossa equipe responde em até um dia útil.
+                Os campos com <span class="obrigatorio">*</span> são obrigatórios.</p>
+
+            <!-- Etapa 6: um input de cada tipo pedido, todos com <label for> associado ao id.
+                 O atributo required deixa o navegador barrar o envio com campo vazio. -->
+            <form class="formulario-contato" id="form-contato" action="#">
+
+                <p class="campo">
+                    <label for="nome">Nome completo <span class="obrigatorio">*</span></label>
+                    <input type="text" id="nome" name="nome" placeholder="Como devemos chamar você?" required>
+                </p>
+
+                <p class="campo">
+                    <label for="email">E-mail para contato <span class="obrigatorio">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="voce@exemplo.com" required>
+                </p>
+
+                <fieldset class="campo">
+                    <legend>Preferência de contato</legend>
+                    <!-- Mesmo atributo name nos dois rádios: por isso são mutuamente exclusivos. -->
+                    <label for="pref-email">E-mail</label>
+                    <input type="radio" id="pref-email" name="preferencia" value="email" checked>
+
+                    <label for="pref-telefone">Telefone</label>
+                    <input type="radio" id="pref-telefone" name="preferencia" value="telefone">
+                </fieldset>
+
+                <p class="campo campo-inline">
+                    <input type="checkbox" id="novidades" name="novidades" value="sim">
+                    <label for="novidades">Aceito receber novidades por e-mail</label>
+                </p>
+
+                <p class="campo">
+                    <label for="senha">Crie uma senha para acompanhar seu pedido <span class="obrigatorio">*</span></label>
+                    <input type="password" id="senha" name="senha" minlength="6" required>
+                </p>
+
+                <button type="submit">Enviar</button>
+
+                <!-- O JavaScript escreve aqui a confirmação, no lugar de enviar de verdade. -->
+                <p id="aviso-envio" class="aviso"></p>
+
+            </form>
+        </section>
+
+    </main>
+
+    <footer id="rodape">
+        <p>Livraria Página Viva</p>
+        <p>
+            Contato: <a href="mailto:contato@paginaviva.com.br">contato@paginaviva.com.br</a>
+        </p>
+    </footer>
+
+    <!-- Etapa 5 e 7: script no fim do <body>, para que o HTML já exista quando ele rodar. -->
+    <script src="js/script.js"></script>
+
+    <!--
+    ====================================================================
+    JUSTIFICATIVA DOS ELEMENTOS SEMÂNTICOS (Etapa 1)
+    ====================================================================
+
+    <header>
+    É a faixa de abertura da página: nome da livraria, menu e resumo do carrinho.
+    Uma <div> ficaria idêntica na tela, mas só a tag <header> avisa ao navegador e
+    ao leitor de tela que ali é o cabeçalho.
+
+    <nav>
+    Marca o bloco de navegação, e é por causa dela que quem usa leitor de tela
+    consegue pular direto para o menu ou pular o menu inteiro. Uma
+    <div class="menu"> não avisa nada disso.
+
+    <main>
+    Delimita o que é só desta página, deixando de fora o cabeçalho e o rodapé, que
+    se repetiriam no site todo. É ele que faz funcionar o atalho "pular para o
+    conteúdo principal", que uma <div id="conteudo"> não ativaria.
+
+    <article> e <section>
+    O cartão do livro é <article> porque se sustenta sozinho: jogado em outra
+    página, continuaria fazendo sentido. Destaques, Formatos e Contato são
+    <section> porque são partes desta página, cada uma com seu próprio título,
+    coisa que a <div> não levaria para o sumário do documento.
+
+    E as duas <div> que sobraram?
+    Ficaram só .cartao-dados e .grade-formatos, as duas existindo apenas para dar
+    um contêiner ao Flexbox e ao Grid. É para isso que a <div> serve: quando não
+    há semântica a expressar, não há tag específica a usar.
+
+    <footer>
+    Fecha a página com o nome da livraria e o e-mail de contato. Uma
+    <div class="rodape"> ficaria igual na tela e não significaria nada para quem
+    não está vendo a tela.
+    ====================================================================
+    -->
+
+</body>
+
+</html>

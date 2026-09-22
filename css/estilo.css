@@ -1,0 +1,870 @@
+/* ==========================================================================
+   Livraria Página Viva - folha de estilo externa
+   Etapas 2 (seletores e cascata), 3 (Flexbox e Grid) e 4 (responsividade)
+
+   Paleta: azul-marinho #14263d / #1a2f4a, dourado #c6a052, creme #f7f4ec.
+   Fontes: pilhas do sistema, sem dependência externa - a página abre igual
+   mesmo sem internet, o que importa na hora da correção.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   ETAPA 2.1 - SELETOR DE ELEMENTO
+   Atinge todas as ocorrências da tag e define o estilo base de texto da página.
+   -------------------------------------------------------------------------- */
+body {
+    margin: 0;
+    /* Etapa 4.3 - unidade relativa (1/3): rem para a fonte base. */
+    font-size: 1rem;
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    line-height: 1.7;
+    color: #22303f;
+    background-color: #f7f4ec;
+    /* Textura discreta de papel, feita só com gradientes. */
+    background-image:
+        radial-gradient(circle at 15% 12%, rgba(198, 160, 82, 0.07), transparent 42%),
+        radial-gradient(circle at 85% 8%, rgba(26, 47, 74, 0.05), transparent 38%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+/* Rolagem suave ao usar o link interno do menu.
+   Fica dentro de prefers-reduced-motion porque quem configurou o sistema para
+   reduzir animações passa mal com rolagem animada. Para essas pessoas o link
+   continua funcionando, só que saltando direto para a seção. */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* Foco visível para quem navega pelo teclado. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #c6a052;
+    outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   ETAPA 2.3 - SELETOR DE ID (aplicado a um único elemento da página)
+   ETAPA 2 - cabeçalho com cor de fundo diferenciada do restante da página.
+   -------------------------------------------------------------------------- */
+#cabecalho {
+    background-color: #14263d;
+    background-image: linear-gradient(135deg, #1a2f4a 0%, #14263d 55%, #0f1d2e 100%);
+    color: #f4eee0;
+    /* Etapa 4.3 - unidade relativa (2/3): padding em rem. */
+    padding: 1.15rem 2.5rem;
+    border-bottom: 3px solid #c6a052;
+    box-shadow: 0 2px 16px rgba(15, 29, 46, 0.28);
+    /* Cabeçalho acompanha a rolagem. */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    /* ETAPA 3.1 - FLEXBOX NO CABEÇALHO
+       Justificativa: nome da livraria, menu e carrinho ficam lado a lado numa
+       linha só. Uma dimensão, o eixo horizontal, que é para o que o Flexbox
+       existe. Daria para fazer com Grid, mas seria mais configuração para
+       chegar no mesmo lugar. */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.marca {
+    margin: 0;
+    font-size: 1.45rem;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+}
+
+/* Fio dourado sob o nome da livraria. */
+.marca::after {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    margin-top: 0.35rem;
+    background-color: #c6a052;
+}
+
+.carrinho-resumo {
+    margin: 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    color: #cfd8e3;
+}
+
+#contador {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: 0.15em 0.5em;
+    border-radius: 999px;
+    background-color: #c6a052;
+    color: #14263d;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 0 0 3px rgba(198, 160, 82, 0.22);
+}
+
+
+/* --------------------------------------------------------------------------
+   MENU - itens organizados horizontalmente (Etapa 2) com Flexbox (Etapa 3.1)
+   -------------------------------------------------------------------------- */
+.lista-menu {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    /* Tira os marcadores: aqui a <ul> serve de estrutura de navegação. */
+    list-style: none;
+}
+
+.lista-menu a {
+    position: relative;
+    display: inline-block;
+    padding: 0.3em 0;
+    color: #e8eef5;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+/* Sublinhado que cresce do centro ao passar o mouse. */
+.lista-menu a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #c6a052;
+    transition: width 0.25s ease, left 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   ETAPA 2.4 - PSEUDO-CLASSE :hover nos links do menu
+   -------------------------------------------------------------------------- */
+.lista-menu a:hover {
+    color: #e3c37f;
+}
+
+.lista-menu a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   CARTÃO DO LIVRO - seletor de classe em um bloco único
+   (o exemplo da Etapa 2.2, com a mesma classe em vários elementos, está
+   logo abaixo da tabela, na regra .destaque)
+   -------------------------------------------------------------------------- */
+.cartao {
+    position: relative;
+    /* Etapa 4.3 - unidade relativa (3/3): largura em % e limite em rem. */
+    width: 90%;
+    max-width: 62rem;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    box-shadow:
+        0 1px 2px rgba(20, 38, 61, 0.06),
+        0 12px 32px rgba(20, 38, 61, 0.09);
+    overflow: hidden;
+
+    /* ETAPA 3.2 - FLEXBOX NO CARTÃO DO LIVRO
+       Justificativa da escolha: o cartão é só a capa de um lado e os dados do
+       outro. Duas faixas, uma direção. Isso é layout unidimensional, que é o
+       terreno do Flexbox. O conteúdo da direita empilha sozinho, na ordem em
+       que já está no HTML, sem precisar posicionar nada na mão. E ainda
+       facilita a Etapa 4: para empilhar no celular basta trocar para
+       flex-direction: column. O Grid ficou reservado para a grade de formatos,
+       mais abaixo, que é onde existe linha e coluna ao mesmo tempo. */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 2.75rem;
+}
+
+/* Faixa dourada no topo do cartão. */
+.cartao::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-image: linear-gradient(90deg, #c6a052, #e3c37f, #c6a052);
+}
+
+.capa {
+    width: 100%;
+    max-width: 15.5rem;
+    height: auto;
+    border-radius: 0.35rem;
+    /* Sombra mais densa embaixo, como um livro apoiado. */
+    box-shadow:
+        0 2px 4px rgba(20, 38, 61, 0.18),
+        0 18px 30px rgba(20, 38, 61, 0.26);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.capa:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 4px 8px rgba(20, 38, 61, 0.2),
+        0 26px 44px rgba(20, 38, 61, 0.3);
+}
+
+.cartao-dados {
+    /* Ocupa o espaço restante da linha, sem estourar em telas estreitas. */
+    flex: 1 1 20rem;
+}
+
+.cartao-dados h2 {
+    margin-top: 0;
+    margin-bottom: 0.2em;
+    font-size: 2.1rem;
+    color: #14263d;
+}
+
+.autor {
+    margin-bottom: 1.1em;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: #6b7686;
+}
+
+/* Etiqueta discreta acima do título. */
+.selo {
+    display: inline-block;
+    margin: 0 0 0.9em;
+    padding: 0.3em 0.9em;
+    border: 1px solid #d8cbaa;
+    border-radius: 999px;
+    background-color: #faf6ec;
+    color: #8a6d2f;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: bold;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.preco {
+    margin-bottom: 0.4em;
+    font-size: 1.9rem;
+    font-weight: bold;
+    color: #14263d;
+}
+
+.preco-parcelas {
+    display: block;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: #6b7686;
+}
+
+/* Linha separando os dados da descrição. */
+.cartao-dados .preco {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee7d8;
+}
+
+
+/* --------------------------------------------------------------------------
+   BOTÃO "ADICIONAR AO CARRINHO" (Etapa 3)
+   Fundo próprio, padding generoso e mudança visual clara no :hover.
+   -------------------------------------------------------------------------- */
+#btn-adicionar {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 1em 2.75em;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #14263d;
+    background-image: linear-gradient(135deg, #1a2f4a, #14263d);
+    color: #f4eee0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.98rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(20, 38, 61, 0.28);
+    transition: background-color 0.25s ease, color 0.25s ease,
+                transform 0.15s ease, box-shadow 0.25s ease;
+}
+
+/* ETAPA 2.4 - PSEUDO-CLASSE :hover no botão */
+#btn-adicionar:hover {
+    background-color: #c6a052;
+    background-image: linear-gradient(135deg, #e3c37f, #c6a052);
+    color: #14263d;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(198, 160, 82, 0.45);
+}
+
+#btn-adicionar:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(198, 160, 82, 0.35);
+}
+
+
+/* --------------------------------------------------------------------------
+   LISTA DO CARRINHO (preenchida pelo JavaScript na Etapa 5)
+   -------------------------------------------------------------------------- */
+#carrinho {
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+#carrinho li {
+    padding: 0.7em 1em;
+    margin-bottom: 0.4rem;
+    border-left: 3px solid #c6a052;
+    border-radius: 0.25rem;
+    background-color: #faf8f2;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.92rem;
+    color: #4a5563;
+    /* Cada item novo entra deslizando. */
+    animation: entra-item 0.35s ease-out;
+}
+
+@keyframes entra-item {
+    from {
+        opacity: 0;
+        transform: translateX(-0.75rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   SEÇÕES INTERNAS
+   -------------------------------------------------------------------------- */
+#destaques,
+#formatos,
+#contato {
+    width: 90%;
+    max-width: 62rem;
+    margin: 3rem auto;
+    /* Compensa o cabeçalho fixo quando o link interno leva até a seção. */
+    scroll-margin-top: 6rem;
+}
+
+/* Títulos de seção com fio dourado à esquerda. */
+#destaques h2,
+#formatos h2,
+#contato h2 {
+    margin-top: 0;
+    padding-left: 0.85rem;
+    border-left: 4px solid #c6a052;
+    font-size: 1.6rem;
+    color: #14263d;
+}
+
+.lista-destaques {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    /* Destaques em grade, para os itens ficarem do mesmo tamanho.
+       O mínimo de 21rem faz os quatro itens caírem em 2 colunas x 2 linhas,
+       em vez de 3 em cima e 1 sobrando embaixo. */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+    gap: 0.75rem;
+}
+
+
+/* ==========================================================================
+   ETAPA 2 - EXPERIMENTO DE ESPECIFICIDADE
+   ==========================================================================
+   A <section> dos destaques carrega class="bloco-secao" e id="destaques" ao
+   mesmo tempo. As duas regras abaixo mandam cores de fundo diferentes para
+   esse mesmo elemento.
+
+   Quem ganha: o id. O fundo fica bege (#e8e0cd), não azul.
+
+   O motivo é a especificidade. Um id vale (1,0,0) e uma classe vale (0,1,0),
+   e a comparação é feita da esquerda para a direita. Por isso qualquer id
+   ganha de qualquer quantidade de classe: nem cem classes empatariam com um
+   id só. A ordem em que as regras aparecem no arquivo não interessa aqui,
+   porque a ordem só desempata quando a especificidade é igual, e não é o caso.
+
+   Se a classe tivesse !important, virava o jogo. O !important é avaliado
+   numa camada anterior à especificidade, então o azul (#d9e6f2) passaria na
+   frente do id, o que confere com o resultado observado na tela. É também
+   por isso que !important não aparece em nenhuma regra deste arquivo: ele
+   quebra a lógica normal da cascata e, uma vez usado, só outro !important
+   consegue derrubar.
+   -------------------------------------------------------------------------- */
+
+/* Regra por CLASSE - especificidade (0,1,0) - PERDE */
+.bloco-secao {
+    background-color: #d9e6f2;
+    padding: 2rem;
+    border-radius: 0.75rem;
+}
+
+/* Regra por ID - especificidade (1,0,0) - VENCE */
+#destaques {
+    background-color: #e8e0cd;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid #ddd2b4;
+}
+
+
+/* --------------------------------------------------------------------------
+   ETAPA 2.2 - SELETOR DE CLASSE aplicado a MAIS DE UM elemento da página
+   A classe .destaque está nos QUATRO <li> da lista de destaques, e uma única
+   regra estiliza todos eles de uma vez. É essa a vantagem do seletor de
+   classe sobre o de id: o id identifica um elemento único, enquanto a classe
+   agrupa quantos elementos forem necessários sob o mesmo estilo.
+   -------------------------------------------------------------------------- */
+.destaque {
+    padding: 0.8em 1em 0.8em 2.6em;
+    position: relative;
+    border-radius: 0.4rem;
+    background-color: rgba(255, 255, 255, 0.55);
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.92rem;
+    color: #4a3f2a;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+/* Marca de conferido, desenhada com borda em vez de imagem. */
+.destaque::before {
+    content: "";
+    position: absolute;
+    left: 1.05em;
+    top: 50%;
+    width: 0.4em;
+    height: 0.75em;
+    margin-top: -0.5em;
+    border: solid #8a6d2f;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.destaque:hover {
+    background-color: #ffffff;
+    transform: translateX(3px);
+}
+
+
+/* --------------------------------------------------------------------------
+   TABELA DE FORMATOS
+   -------------------------------------------------------------------------- */
+.tabela-formatos {
+    width: 100%;
+    margin-bottom: 2.5rem;
+    border-collapse: collapse;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 14px rgba(20, 38, 61, 0.08);
+    overflow: hidden;
+}
+
+.tabela-formatos caption {
+    margin-bottom: 0.9em;
+    font-style: italic;
+    color: #6b7686;
+    text-align: left;
+}
+
+.tabela-formatos th,
+.tabela-formatos td {
+    padding: 0.95em 1.15em;
+    border-bottom: 1px solid #ece6d8;
+    text-align: left;
+}
+
+.tabela-formatos thead th {
+    background-color: #14263d;
+    color: #f4eee0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-bottom: none;
+}
+
+/* Zebrado: pinta só as linhas pares do corpo da tabela. */
+.tabela-formatos tbody tr:nth-child(even) {
+    background-color: #fbf9f4;
+}
+
+.tabela-formatos tbody tr:hover {
+    background-color: #f4efe2;
+}
+
+.tabela-formatos tbody tr:last-child th,
+.tabela-formatos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   ETAPA 3.3 - CSS GRID NA GRADE DE FORMATOS
+   Justificativa: aqui é diferente do cartão. Os três cartões precisam ter a
+   mesma largura, se alinhar entre si na vertical e quebrar para outra linha
+   conforme a tela diminui. Linha e coluna ao mesmo tempo, que é exatamente o
+   problema que o Grid resolve. Com Flexbox seria necessário ficar calculando
+   flex-basis na mão para o alinhamento sair igual.
+   -------------------------------------------------------------------------- */
+.grade-formatos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.5rem;
+}
+
+.cartao-formato {
+    position: relative;
+    padding: 1.6rem 1.4rem;
+    border: 1px solid #e6dfcd;
+    border-top: 3px solid #c6a052;
+    border-radius: 0.6rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(20, 38, 61, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cartao-formato:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 26px rgba(20, 38, 61, 0.14);
+}
+
+.cartao-formato h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: #14263d;
+}
+
+.cartao-formato .preco {
+    margin-bottom: 0.5em;
+    padding-bottom: 0;
+    border-bottom: none;
+    font-size: 1.3rem;
+}
+
+.cartao-formato p:last-child {
+    margin-bottom: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.88rem;
+    color: #6b7686;
+}
+
+/* Fita no canto do formato mais vendido. */
+.selo-formato {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    margin: 0;
+    padding: 0.25em 0.7em;
+    border-radius: 999px;
+    background-color: #c6a052;
+    color: #14263d;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+
+/* --------------------------------------------------------------------------
+   FORMULÁRIO DE CONTATO (Etapa 6)
+   -------------------------------------------------------------------------- */
+#contato {
+    padding: 2.25rem;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 16px rgba(20, 38, 61, 0.07);
+}
+
+.formulario-contato {
+    max-width: 32rem;
+}
+
+.campo {
+    margin-bottom: 1.4rem;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 0.45em;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.88rem;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    color: #2f3d4d;
+}
+
+.campo input[type="text"],
+.campo input[type="email"],
+.campo input[type="password"] {
+    width: 100%;
+    padding: 0.8em 0.95em;
+    border: 1px solid #d5cdbb;
+    border-radius: 0.35rem;
+    background-color: #fdfcf8;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.97rem;
+    color: #22303f;
+    /* Evita que o padding estoure a largura de 100%. */
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease,
+                background-color 0.2s ease;
+}
+
+.campo input[type="text"]:focus,
+.campo input[type="email"]:focus,
+.campo input[type="password"]:focus {
+    border-color: #c6a052;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(198, 160, 82, 0.18);
+    outline: none;
+}
+
+/* Rádios e checkbox ficam ao lado do texto, não acima dele. */
+fieldset.campo {
+    border: 1px solid #e0d8c6;
+    border-radius: 0.35rem;
+    padding: 1rem 1.15rem;
+    background-color: #fdfcf8;
+}
+
+fieldset.campo legend {
+    padding: 0 0.5em;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #2f3d4d;
+}
+
+fieldset.campo label {
+    display: inline;
+    margin-right: 0.4em;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+fieldset.campo input {
+    margin-right: 1.4rem;
+    accent-color: #14263d;
+    cursor: pointer;
+}
+
+.campo-inline label {
+    display: inline;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.campo-inline input {
+    margin-right: 0.4rem;
+    accent-color: #14263d;
+    cursor: pointer;
+}
+
+.formulario-contato button {
+    padding: 0.9em 2.75em;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #14263d;
+    background-image: linear-gradient(135deg, #1a2f4a, #14263d);
+    color: #f4eee0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(20, 38, 61, 0.25);
+    transition: background-color 0.25s ease, color 0.25s ease,
+                transform 0.15s ease, box-shadow 0.25s ease;
+}
+
+/* Asterisco dos campos obrigatórios. */
+.obrigatorio {
+    color: #a6332e;
+    font-weight: bold;
+}
+
+/* Campo obrigatório que ficou vazio depois de o usuário mexer nele.
+   O :placeholder-shown evita marcar de vermelho um campo que ainda nem
+   foi visitado, o que seria agressivo antes de a pessoa tentar enviar. */
+.campo input:required:invalid:not(:placeholder-shown) {
+    border-color: #a6332e;
+}
+
+/* Confirmação escrita pelo JavaScript depois do clique em Enviar.
+   Fica invisível enquanto está vazia, por causa do :empty. */
+.aviso {
+    margin: 1.25rem 0 0;
+    padding: 0.85em 1.1em;
+    border-left: 3px solid #2e7d54;
+    border-radius: 0.3rem;
+    background-color: #eef6f1;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.92rem;
+    color: #24593d;
+}
+
+.aviso:empty {
+    display: none;
+}
+
+.formulario-contato button:hover {
+    background-color: #c6a052;
+    background-image: linear-gradient(135deg, #e3c37f, #c6a052);
+    color: #14263d;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(198, 160, 82, 0.4);
+}
+
+
+/* --------------------------------------------------------------------------
+   RODAPÉ
+   -------------------------------------------------------------------------- */
+#rodape {
+    margin-top: 4rem;
+    padding: 2.5rem 2rem;
+    background-color: #14263d;
+    background-image: linear-gradient(135deg, #1a2f4a, #0f1d2e);
+    border-top: 3px solid #c6a052;
+    color: #f4eee0;
+    text-align: center;
+}
+
+#rodape p:first-child {
+    margin-bottom: 0.4em;
+    font-size: 1.2rem;
+    letter-spacing: 0.02em;
+}
+
+#rodape p:last-child {
+    margin-bottom: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 0.88rem;
+    color: #b9c5d3;
+}
+
+#rodape a {
+    color: #e3c37f;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(227, 195, 127, 0.45);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+#rodape a:hover {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+
+
+/* ==========================================================================
+   ETAPA 4.2 - MEDIA QUERY: telas de até 600px
+   Abaixo desse ponto de quebra o cartão do livro empilha seus elementos
+   verticalmente e o menu passa a ocupar uma linha por item.
+   ========================================================================== */
+@media (max-width: 600px) {
+
+    #cabecalho {
+        /* Cabeçalho inteiro em coluna, centralizado. */
+        flex-direction: column;
+        text-align: center;
+        padding: 1.15rem 1rem;
+        /* Em tela pequena o cabeçalho é alto demais para acompanhar a rolagem. */
+        position: static;
+    }
+
+    .marca::after {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .lista-menu {
+        /* Menu: de linha horizontal para uma linha por item. */
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .cartao {
+        /* Cartão do livro: capa e dados empilhados, não mais lado a lado. */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem 1.25rem;
+        gap: 1.75rem;
+    }
+
+    .capa {
+        max-width: 62%;
+    }
+
+    .cartao-dados h2 {
+        font-size: 1.65rem;
+    }
+
+    .cartao-dados .preco {
+        font-size: 1.6rem;
+    }
+
+    #btn-adicionar {
+        /* Alvo de toque ocupando a largura toda em telas pequenas. */
+        width: 100%;
+        padding: 1em 1rem;
+    }
+
+    #carrinho li {
+        text-align: left;
+    }
+
+    .lista-destaques,
+    .grade-formatos {
+        /* Uma coluna só: destaques e cartões de formato um abaixo do outro. */
+        grid-template-columns: 1fr;
+    }
+
+    #destaques,
+    #contato {
+        padding: 1.5rem 1.15rem;
+    }
+
+    .tabela-formatos th,
+    .tabela-formatos td {
+        padding: 0.65em 0.6em;
+        font-size: 0.85rem;
+    }
+}
