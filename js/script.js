@@ -34,7 +34,6 @@ function adicionarAoCarrinho() {
     /* Passo 2 - define o texto que aparece.
        O textContent insere texto puro. Se viesse alguma marcação aqui, ela
        seria escrita como texto mesmo, sem virar HTML. */
-    quantidade = quantidade + 1;
     novoItem.textContent = "1x " + tituloDoLivro;
 
     /* Passo 3 - pendura o <li> como último filho da <ul id="carrinho">.
@@ -42,6 +41,7 @@ function adicionarAoCarrinho() {
     carrinho.appendChild(novoItem);
 
     /* Etapa 5.5 - atualiza o contador do cabeçalho, também com textContent. */
+    quantidade = quantidade + 1;
     contador.textContent = quantidade;
 }
 

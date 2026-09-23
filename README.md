@@ -14,7 +14,7 @@ o `index.html` em qualquer navegador:
 
 ```bash
 git clone <url-do-repositorio>
-cd livraria-pagina-viva
+cd Livraria_pagina_viva
 ```
 
 Depois é só abrir o arquivo `index.html` com duplo clique ou arrastá-lo para a
